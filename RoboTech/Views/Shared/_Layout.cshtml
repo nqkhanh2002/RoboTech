@@ -1,0 +1,180 @@
+﻿@{
+    ViewData["Title"] = "Home";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RoboTech</title>
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="~/favicon.png">
+    <!--CSS nay la template cua Nhan -->
+    <link rel="stylesheet" href="~/css/Bootswatch.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="/_Layout.cshtml.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/RoboTech.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" />
+    <script src="https://kit.fontawesome.com/3518e7db2c.js" crossorigin="anonymous"></script>
+    
+    <!-- Vendor CSS (Contain Bootstrap, Icon Fonts) -->
+    <link rel="stylesheet" href="~/css/vendor/font-awesome.min.css" />
+    <link rel="stylesheet" href="~/css/vendor/Pe-icon-7-stroke.css" />
+
+    <!-- Plugin CSS (Global Plugins Files) -->
+    <link rel="stylesheet" href="~/css/plugins/animate.min.css">
+    <link rel="stylesheet" href="~/css/plugins/jquery-ui.min.css">
+    <link rel="stylesheet" href="~/css/plugins/swiper-bundle.min.css">
+    <link rel="stylesheet" href="~/css/plugins/nice-select.css">
+    <link rel="stylesheet" href="~/css/plugins/magnific-popup.min.css" />
+
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom py-4 box-shadow">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/logo.png" width="50" height="80"></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        
+                        <form asp-controller="TimKiem" asp-action="FindProduct" class="d-flex offset-1" method="post">
+                           
+                                @Html.AntiForgeryToken()
+                                <input class="form-control search-bar" name="keyword" type="text" placeholder="Search any products...">
+                                <button class="btn search-btn" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                            
+                            
+                        </form>
+                        @*<form class="d-flex offset-1">
+                            <input class="form-control search-bar" type="text" placeholder="Search any products...">
+                            <button class="btn search-btn" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                        </form>*@
+                        <li class="offset-1" style="margin-top: 7px">
+                            <div>
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                    <i class="fa-solid fa-user"></i> <a class="text-dark fw-semibold" style="text-decoration: none" href="/my-account">&nbsp;My Account</a>
+                                    <a class="text-dark fw-semibold" style="text-decoration: none" asp-controller="Logout" asp-action="Index">| Log out </a>
+                                }
+                                else
+                                {
+                                    <i class="fa-solid fa-user"></i> <a class="text-dark fw-semibold" style="text-decoration: none" href="/Log-in">&nbsp;Log in </a>
+                                    <a class="text-dark fw-semibold" style="text-decoration: none" asp-area="" asp-controller="Register" asp-action="Index">| Sign Up </a>
+                                }
+
+
+                            </div>
+                        </li>
+                        <li id="numberCart" class="offset-1 minicart-wrap me-3 me-lg-0">
+                            @await Component.InvokeAsync("NumberCart")
+                        </li>
+                        
+                        @*<li class="offset-1">
+                            <div style="margin-top: 7px">
+                                <i class="fa-solid fa-cart-shopping"></i>
+                                <div class="offcanvas-minicart_wrapper" id="miniCart">
+                                    <a class="text-dark fw-semibold" style="text-decoration: none" href="cart.html">
+                                        &nbsp;Cart
+                                    </a>
+                                    @await Component.InvokeAsync("HeaderCart")
+
+                                </div>
+                               
+                            </div>
+                        </li>*@
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="offcanvas-minicart_wrapper" id="miniCart">
+            @await Component.InvokeAsync("HeaderCart")
+        </div>
+    </header>
+    <main role="main" class="">
+            @RenderBody()
+        <div class="sub-main">
+            <a class="gotopbtn" href="#"><i class="fas fa-arrow-up"> </i></a>
+        </div>
+    </main>
+    <footer class="footer border-top footer text-muted">
+        <div class="container">
+            <div class="row">
+                <div class="footer-col">
+                    <h4>company</h4>
+                    <ul>
+                        <li><a href="#">about us</a></li>
+                        <li><a href="#">our services</a></li>
+                        <li><a href="#">privacy policy</a></li>
+                        <li><a href="#">Warrabty policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>get help</h4>
+                    <ul>
+                        <li><a href="#">shipping</a></li>
+                        <li><a href="#">returns</a></li>
+                        <li><a href="#">order status</a></li>
+                        <li><a href="#">payment options</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>online shop</h4>
+                    <ul>
+                        <li><a href="/danhmuc/laptop">Laptop</a></li>
+                        <li><a href="#">PC</a></li>
+                        <li><a href="#">Screen</a></li>
+                        <li><a href="#">Keyboard</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>follow us</h4>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            Copyright &copy; 2022 <strong>ROBOTECH</strong>. Powered by UIT - <a asp-area="" asp-controller="Home" asp-action="Privacy" style="text-decoration:none">Our Privacy</a>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <!-- Vendor JS -->
+    <script src="~/js/vendor/bootstrap.bundle.min.js"></script>
+    <script src="~/js/vendor/jquery-3.5.1.min.js"></script>
+    <script src="~/js/vendor/jquery-migrate-3.3.0.min.js"></script>
+    <script src="~/js/vendor/modernizr-3.11.2.min.js"></script>
+    <script src="~/js/vendor/jquery.waypoints.js"></script>
+
+    <!--Plugins JS-->
+    <script src="~/js/plugins/wow.min.js"></script>
+    <script src="~/js/plugins/jquery-ui.min.js"></script>
+    <script src="~/js/plugins/swiper-bundle.min.js"></script>
+    <script src="~/js/plugins/jquery.nice-select.js"></script>
+    <script src="~/js/plugins/parallax.min.js"></script>
+    <script src="~/js/plugins/jquery.magnific-popup.min.js"></script>
+
+    <!--Main JS (Common Activation Codes)-->
+    <script src="~/js/main.js"></script>
+    
+    @await Component.InvokeAsync("Notyf")
+    @await RenderSectionAsync("Scripts", required: false)
+    @await RenderSectionAsync("Styles", required: false)
+</body>
+</html>
+
+

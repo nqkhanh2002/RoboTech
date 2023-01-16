@@ -1,0 +1,440 @@
+﻿@*@using PagedList.Core.Mvc
+@model PagedList.Core.IPagedList<RoboTech.Models.TbProduct>*@
+@using RoboTech.Models
+@model IEnumerable<RoboTech.Models.TbProduct>
+@{
+    ViewData["Title"] = "FindProduct";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string keyword = ViewBag.Keyword;
+}
+
+
+<section style="background-color: rgb(250, 250, 250, 0.60); margin-top: -15px">
+
+    <div class="container py-5">
+        <div class="title text-center font-weight-bold" style="font-size: 50px;">
+            <h2> Search Result for "@keyword"</h2>
+        </div>
+        <div class="filter">
+            <div class="input-affix m-v-5">
+                <i class="prefix-icon anticon anticon-search opacity-04"></i>
+                <input id="keyword" name="keyword" type="text" class="form-control" placeholder="Search product ...">
+            </div>
+
+        </div>
+        <div class="divider">
+
+            <div class="row">
+                <div class="side-nav col-lg-3">
+                    <div class="head" style="border-bottom: 10px">
+                        <h5><i class="fa-solid fa-bars" style="font-size: 20px;"></i>&nbsp;&nbsp;Category</h5>
+                    </div>
+                    <div class="nav2">
+                        <ul class="menu">
+                            <li class="dropdown">
+                                <a href="#"> PC&nbsp&nbsp;&nbsp;<i class="fa-solid fa-chevron-right" style="font-size: 10px"></i></a>
+                                <ul class="dropdown_menu dropdown_menu--animated dropdown_menu-6">
+                                    <li class="dropdown_item-1"><a href="#">Gaming</a></li>
+                                    <li class="dropdown_item-2"><a href="#">Office</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#">Laptop&nbsp;&nbsp;<i class="fa-solid fa-chevron-right" style="font-size: 10px"></i></a>
+                                <ul class="dropdown_menu dropdown_menu--animated dropdown_menu-6">
+                                    <li class="dropdown_item-1"><a href="#">Gaming</a></li>
+                                    <li class="dropdown_item-2"><a href="#">Office</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown"> <a href="#">Screen</a></li>
+                            <li class="dropdown"> <a href="#">Keyboard</a></li>
+                            <li class="dropdown"> <a href="#">Mouse</a></li>
+                            <li class="dropdown mb-5"> <a href="#">Headphone</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-9">
+                    <div class="row">
+                        @if (Model != null && Model.Count() > 0)
+                        {
+                            foreach (var item in Model)
+                            {
+                                string url = $"/{item.Alias}-{item.ProductId}";
+                                <div class="col-md-6 col-lg-4 mb-4">
+                                    <a href="@url">
+                                        <div class="card">
+                                            <img width="400"
+                                         height="200" src="~/images/products/@item.Thumb"
+                                         class="card-img-top " alt="Laptop" />
+                                            <div class="card-body">
+                                                <div class="d-flex justify-content-between">
+                                                    <p class="small">@item.Cate</p>
+                                                </div>
+                                                <div class="d-flex justify-content-between mb-3">
+                                                    <h5 class="mb-0">@item.Name</h5>
+                                                    <h5 class="text-dark mb-0">@item.Price.Value.ToString("#,##0") VNĐ</h5>
+                                                </div>
+                                                <div class="d-flex justify-content-between mb-2">
+                                                    <p class="text-muted mb-0">Available: <span class="fw-bold">@item.Quantity</span></p>
+                                                    <div class="ms-auto text-warning">
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                    </div>
+                                                </div>
+                                                <button type="button" class="btn bg-cart w-100 mt-2 add-to-cart">
+                                                    <a href="@url"><i class="fa-solid fa-cart-plus">&nbsp;BUY NOW</i></a>
+                                                    @*      <input hidden asp-for="@item.ProductId" />*@
+                                                </button>
+
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            }
+                        }
+                        <div class="col-md-6 col-lg-4 mb-4">
+                            <a asp-action="Details" asp-controller="Product">
+                                <div class="card">
+                                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/4.webp"
+                                         class="card-img-top " alt="Laptop" />
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between">
+                                            <p class="small"><a href="#!" class="text-muted">Category</a></p>
+                                        </div>
+                                        <div class="d-flex justify-content-between mb-3">
+                                            <h5 class="mb-0">Name</h5>
+                                            <h5 class="text-dark mb-0">Price</h5>
+                                        </div>
+                                        <div class="d-flex justify-content-between mb-2">
+                                            <p class="text-muted mb-0">Available: <span class="fw-bold">6</span></p>
+                                            <div class="ms-auto text-warning">
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                            </div>
+                                        </div>
+                                        <button type="button" class="btn bg-cart w-100 mt-2">
+                                            <i class="fa-solid fa-cart-plus"></i>&nbsp;Add
+                                            to cart
+                                        </button>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-6 col-lg-4 mb-4">
+                            <a href="#">
+                                <div class="card">
+                                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/4.webp"
+                                         class="card-img-top " alt="Laptop" />
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between">
+                                            <p class="small"><a href="#!" class="text-muted">Category</a></p>
+                                        </div>
+                                        <div class="d-flex justify-content-between mb-3">
+                                            <h5 class="mb-0">Name</h5>
+                                            <h5 class="text-dark mb-0">Price</h5>
+                                        </div>
+                                        <div class="d-flex justify-content-between mb-2">
+                                            <p class="text-muted mb-0">Available: <span class="fw-bold">6</span></p>
+                                            <div class="ms-auto text-warning">
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                            </div>
+                                        </div>
+                                        <button type="button" class="btn bg-cart w-100 mt-2">
+                                            <i class="fa-solid fa-cart-plus"></i>&nbsp;Add
+                                            to cart
+                                        </button>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-6 col-lg-4 mb-4">
+                            <a href="#">
+                                <div class="card">
+                                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/4.webp"
+                                         class="card-img-top " alt="Laptop" />
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between">
+                                            <p class="small"><a href="#!" class="text-muted">Category</a></p>
+                                        </div>
+                                        <div class="d-flex justify-content-between mb-3">
+                                            <h5 class="mb-0">Name</h5>
+                                            <h5 class="text-dark mb-0">Price</h5>
+                                        </div>
+                                        <div class="d-flex justify-content-between mb-2">
+                                            <p class="text-muted mb-0">Available: <span class="fw-bold">6</span></p>
+                                            <div class="ms-auto text-warning">
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                            </div>
+                                        </div>
+                                        <button type="button" class="btn bg-cart w-100 mt-2">
+                                            <i class="fa-solid fa-cart-plus"></i>&nbsp;Add
+                                            to cart
+                                        </button>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-6 col-lg-4 mb-4">
+                            <a href="#">
+                                <div class="card">
+                                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/4.webp"
+                                         class="card-img-top " alt="Laptop" />
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between">
+                                            <p class="small"><a href="#!" class="text-muted">Category</a></p>
+                                        </div>
+                                        <div class="d-flex justify-content-between mb-3">
+                                            <h5 class="mb-0">Name</h5>
+                                            <h5 class="text-dark mb-0">Price</h5>
+                                        </div>
+                                        <div class="d-flex justify-content-between mb-2">
+                                            <p class="text-muted mb-0">Available: <span class="fw-bold">6</span></p>
+                                            <div class="ms-auto text-warning">
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                            </div>
+                                        </div>
+                                        <button type="button" class="btn bg-cart w-100 mt-2">
+                                            <i class="fa-solid fa-cart-plus"></i>&nbsp;Add
+                                            to cart
+                                        </button>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-6 col-lg-4 mb-4">
+                            <a href="#">
+                                <div class="card">
+                                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/4.webp"
+                                         class="card-img-top " alt="Laptop" />
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between">
+                                            <p class="small"><a href="#!" class="text-muted">Category</a></p>
+                                        </div>
+                                        <div class="d-flex justify-content-between mb-3">
+                                            <h5 class="mb-0">Name</h5>
+                                            <h5 class="text-dark mb-0">Price</h5>
+                                        </div>
+                                        <div class="d-flex justify-content-between mb-2">
+                                            <p class="text-muted mb-0">Available: <span class="fw-bold">6</span></p>
+                                            <div class="ms-auto text-warning">
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                            </div>
+                                        </div>
+                                        <button type="button" class="btn bg-cart w-100 mt-2">
+                                            <i class="fa-solid fa-cart-plus"></i>&nbsp;Add
+                                            to cart
+                                        </button>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-6 col-lg-4 mb-4">
+                            <a href="#">
+                                <div class="card">
+                                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/7.webp"
+                                         class="card-img-top " alt="Laptop" />
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between">
+                                            <p class="small"><a href="#!" class="text-muted">Category</a></p>
+                                        </div>
+                                        <div class="d-flex justify-content-between mb-3">
+                                            <h5 class="mb-0">Name</h5>
+                                            <h5 class="text-dark mb-0">Price</h5>
+                                        </div>
+                                        <div class="d-flex justify-content-between mb-2">
+                                            <p class="text-muted mb-0">Available: <span class="fw-bold">7</span></p>
+                                            <div class="ms-auto text-warning">
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                            </div>
+                                        </div>
+                                        <button type="button" class="btn bg-cart w-100 mt-2">
+                                            <i class="fa-solid fa-cart-plus"></i>&nbsp;Add
+                                            to cart
+                                        </button>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-6 col-lg-4 mb-4 ">
+                            <a href="#">
+                                <div class="card">
+                                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/5.webp"
+                                         class="card-img-top " alt="Gaming Laptop" />
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between">
+                                            <p class="small"><a href="#!" class="text-muted">Category</a></p>
+                                        </div>
+                                        <div class="d-flex justify-content-between mb-3">
+                                            <h5 class="mb-0">Name</h5>
+                                            <h5 class="text-dark mb-0">Price</h5>
+                                        </div>
+                                        <div class="d-flex justify-content-between mb-2">
+                                            <p class="text-muted mb-0">Available: <span class="fw-bold">5</span></p>
+                                            <div class="ms-auto text-warning">
+                                                <i class="fa fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                            </div>
+                                        </div>
+                                        <button type="button" class="btn bg-cart w-100 mt-2">
+                                            <i class="fa-solid fa-cart-plus"></i>&nbsp;Add
+                                            to cart
+                                        </button>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-6 col-lg-4 mb-4 ">
+                            <a href="#">
+                                <div class="card">
+                                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/5.webp"
+                                         class="card-img-top " alt="Gaming Laptop" />
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between">
+                                            <p class="small"><a href="#!" class="text-muted">Category</a></p>
+                                        </div>
+                                        <div class="d-flex justify-content-between mb-3">
+                                            <h5 class="mb-0">Name</h5>
+                                            <h5 class="text-dark mb-0">Price</h5>
+                                        </div>
+                                        <div class="d-flex justify-content-between mb-2">
+                                            <p class="text-muted mb-0">Available: <span class="fw-bold">5</span></p>
+                                            <div class="ms-auto text-warning">
+                                                <i class="fa fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                            </div>
+                                        </div>
+                                        <button type="button" class="btn bg-cart w-100 mt-2">
+                                            <i class="fa-solid fa-cart-plus"></i>&nbsp;Add
+                                            to cart
+                                        </button>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-6 col-lg-4 mb-4 ">
+                            <a href="#">
+                                <div class="card">
+                                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/5.webp"
+                                         class="card-img-top " alt="Gaming Laptop" />
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between">
+                                            <p class="small"><a href="#!" class="text-muted">Category</a></p>
+                                        </div>
+                                        <div class="d-flex justify-content-between mb-3">
+                                            <h5 class="mb-0">Name</h5>
+                                            <h5 class="text-dark mb-0">Price</h5>
+                                        </div>
+                                        <div class="d-flex justify-content-between mb-2">
+                                            <p class="text-muted mb-0">Available: <span class="fw-bold">5</span></p>
+                                            <div class="ms-auto text-warning">
+                                                <i class="fa fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                            </div>
+                                        </div>
+                                        <button type="button" class="btn bg-cart w-100 mt-2">
+                                            <i class="fa-solid fa-cart-plus"></i>&nbsp;Add
+                                            to cart
+                                        </button>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <section class="pagination-val text-center mt-4">
+                            <a href="#">«</a>
+                            <a href="#" class="active_pagin">1</a>
+                            <a href="#">2</a>
+                            <a href="#">3</a>
+                            <a href="#">4</a>
+                            <a href="#">5</a>
+                            <a href="#">6</a>
+                            <a href="#">»</a>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            jQuery("#txtCatID").change(function () {
+                var catID = jQuery(this).children(":selected").attr("value");
+                catID = parseFloat(catID);
+                $('#txtCatID option')
+                    .removeAttr('selected');
+                $("#txtCatID > [value=" + catID + "]").attr("selected", "true");
+                $.ajax({
+                    url: '/Admin/AdminProducts/Filtter',
+                    datatype: "json",
+                    type: "GET",
+                    data: {
+                        CatID: catID
+                    },
+                    async: true,
+                    success: function (results) {
+                        if (results.status == "success") {
+                            window.location.href = results.redirectUrl;
+                        }
+                    },
+                    error: function (xhr) {
+                        alert('error');
+                    }
+                });
+            });
+            $("#keyword").keyup(function () {
+                var strkeyword = $('#keyword').val();
+                $.ajax({
+                    url: '/Admin/Search/FindProduct/',
+                    datatype: "json",
+                    type: "POST",
+                    data: { keyword: strkeyword },
+                    async: true,
+                    success: function (results) {
+                        $("#records_table").html("");
+                        $("#records_table").html(results);
+                    },
+                    error: function (xhr) {
+                        alert('error');
+                    }
+                });
+            });
+        });
+    </script>
+}
+

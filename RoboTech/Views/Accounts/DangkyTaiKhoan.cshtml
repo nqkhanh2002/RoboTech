@@ -1,0 +1,70 @@
+﻿@model RoboTech.ModelViews.RegisterViewModel
+
+@{
+    ViewData["Title"] = "Sign Up";
+    Layout = "_LayoutAccount";
+}
+
+
+
+
+<div class="form login">
+    <div class="form-content">
+        <header style="font-size: 25px">Sign Up To <a href="/Home" class="title-head">RoboTech</a></header>
+        <form asp-action="DangkyTaiKhoan">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="field input-field">
+                <input type="text" asp-for="FullName" placeholder="Name" class="input">
+                @*<span asp-validation-for="FullName" class="text-danger"></span>*@
+            </div>
+            <div class="field input-field">
+                <input type="email" asp-for="Email" placeholder="Email" class="input">
+                @*<span asp-validation-for="Email" class="text-danger"></span>*@
+            </div>
+            <div class="field input-field">
+                <input type="tel" asp-for="Phone" placeholder="Phone Number" class="input">
+                @*<span asp-validation-for="Phone" class="text-danger"></span>*@
+            </div>
+
+
+            <div class="field input-field">
+                <input type="password" asp-for="Password" placeholder="Password" class="password">
+                <span asp-validation-for="Password" class="text-danger"></span>
+                <i class='bx bx-hide eye-icon'></i>
+            </div>
+
+
+            <div class="field button-field">
+                <button>Signup</button>
+            </div>
+        </form>
+
+        <div class="form-link">
+            <span>Already have an account ? <a href="/Log-in">Login Now !</a></span>
+        </div>
+    </div>
+
+    <div class="line"></div>
+
+    <div class="media-options">
+        <a href="#" class="field facebook">
+            <i class='bx bxl-facebook facebook-icon'></i>
+            <span>Signin with Facebook</span>
+        </a>
+    </div>
+
+    <div class="media-options">
+        <a href="#" class="field google">
+            <img src="~/lib/google.png" alt="" class="google-img">
+            <span>Signin with Google</span>
+        </a>
+    </div>
+
+</div>
+
+
+
+
+
+
+

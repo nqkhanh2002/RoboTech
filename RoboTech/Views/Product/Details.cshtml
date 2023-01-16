@@ -1,0 +1,148 @@
+﻿@model RoboTech.Models.TbProduct
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<TbProduct> lsProducts = ViewBag.SanPham;
+}
+
+
+
+<div id="product-details">
+    <div class="container">
+        <div class="mt-4" style="margin-bottom: 60px">
+        <a href="/ProductList" class="text-body">
+            <i class="fas fa-long-arrow-alt-left me-4"></i>Return to shop
+        </a>
+        </div>
+        <div class="card-wrapper">
+            <div class="card">
+                <div class="product-imgs">
+                    <div class="img-display">
+                        <div class="img-showcase">
+                            <img src="~/images/products/@Model.Thumb" />
+                            <img src="~/assets/img/pc2.jpg" />
+                            <img src="~/assets/img/pc3.jpg" />
+                            <img src="~/assets/img/pc4.jpg" />
+                        </div>
+                    </div>
+                    <div class="img-select">
+                        <div class="img-item">
+                            <a href="#" data-id="1">
+                                <img src="~/images/products/@Model.Thumb" />
+                            </a>
+                        </div>
+                        <div class="img-item">
+                            <a href="#" data-id="2">
+                                <img src="~/assets/img/pc2.jpg" />
+                            </a>
+                        </div>
+                        <div class="img-item">
+                            <a href="#" data-id="3">
+                                <img src="~/assets/img/pc3.jpg" />
+                            </a>
+                        </div>
+                        <div class="img-item">
+                            <a href="#" data-id="4">
+                                <img src="~/assets/img/pc4.jpg" />
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                @* card-right*@
+                <div class="product-content">
+                    <h2 class="product-title">@Model.Name</h2>
+                    <div class="product-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                        <span>4.7(21)</span>
+                    </div>
+                    <div class="product-card-price mt-3">
+                        @*<p class="last-price">Old Price: <span>$257.00</span></p>*@
+                        <p class="new-price">New Price: <span>@Model.Price.Value.ToString("#,##0") VNĐ</span></p>
+                    </div>
+                    <div class="product-detail">
+                        <h2>about this item: </h2>
+                        <p>@Model.Description</p>
+                        <p>@Model.Image</p>
+                        <ul>
+                            <li>Available: <span>in stock</span></li>
+                            <li>Category: <span><a href="danhmuc/@Model.Cate.Alias">@Model.Cate.Name</a></span></li>
+                            <li>Warranty: <span>1 year</span></li>
+                            <li>Shipping Area: <span>All over the world</span></li>
+                            <li>Shipping Fee: <span>Free</span></li>
+                            <li>View: <span>1324</span></li>
+                        </ul>
+                    </div>
+                    <div class="purchase-info">
+                        <input id="txtsoLuong" name="txtsoLuong" type="number" min="0" value="1">
+                        <button type="button" class="btn add-to-cart ">
+                            Add to Cart <i class="fas fa-shopping-cart"></i>
+                            <input hidden asp-for="ProductId" />
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $(function () {
+                $(".add-to-cart").click(function () {
+                    var productid = $('#ProductId').val();
+                    var soLuong = $('#txtsoLuong').val();
+                    $.ajax({
+                        url: '/api/cart/add',
+                        type: "POST",
+                        dataType: "JSON",
+                        data: {
+                            productID: productid,
+                            amount: soLuong
+                        },
+                        success: function (response) {
+                            if (response.result == 'Redirect') {
+                                window.location = response.url;
+                            }
+                            else {
+                                loadHeaderCart(); //Add Product success
+                                location.reload();
+                            }
+                            console.log(response); // log to the console to see whether it worked
+                        },
+                        error: function (error) {
+                            alert("There was an error posting the data to the server: " + error.responseText);
+                        }
+                    });
+                });
+
+        $(".removecart").click(function () {
+                var productid = $(this).attr("data-productid");
+                $.ajax({
+                url: "api/cart/remove",
+                type: "POST",
+                dataType: "JSON",
+                data: { productID: productid },
+                success: function (result) {
+                if (result.success) {
+                loadHeaderCart();//Reload lai gio hang
+                location.reload();
+                }
+                },
+                error: function (rs) {
+                alert("Remove Cart Error !")
+                }
+                });
+                });
+                });
+            function loadHeaderCart() {
+                $('#miniCart').load("/AjaxContent/HeaderCart");
+                $('#numberCart').load("/AjaxContent/NumberCart");
+            }
+        });
+    </script>
+}
